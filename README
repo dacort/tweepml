@@ -1,2 +1,12 @@
 TweepML is an XML format used to represent a list of Tweeps (Twitter users). The primary goal of this format is to allow people to easily share between application a list of Tweeps. For example, you might want to export a list of tweeps from application A and import into application B. Or, you might want to publish on your website a list of tweeps you recommend people to follow. In addition to provide an aggregation of Tweeps, TweepML allows for an hierarchical grouping of Tweeps as well as tagging. Some of the inspiration for TweepML came from OPML, a simple format to share a list of blogs (blogroll). TweepML is also extensible, which allows applications and services to augment its structure with additional data.
 
+Read in a TweepML XML file with the following:
+tml = TweepML.new(File.read('/path/to/tweepml.xml'))
+
+The tweep_list from the XML will then be accessible as:
+tml.tweep_list
+
+As TweepLists can contain other lists as well as lists of Tweeps, you can iterate through them with the following:
+tml.tweep_list.tweep_lists - returns an array of TweepLists
+or
+tml.tweep_list.tweeps - returns an array of Tweeps
