@@ -128,6 +128,11 @@ class TweepList
   def tweeps
     @nodes.select{|t| t.is_a?Tweep}
   end
+  
+  # List all TweepLists in this list
+  def tweep_lists
+    @nodes.select{|t| t.is_a?TweepList}
+  end
 end
 
 class Tweep
