@@ -34,7 +34,7 @@ class TweepML
   # Set the _contact_name_ of the TweepML document.
   # Max length is 50 characters
   def contact_name=(contact_name)
-    @contact_name = contact_name[0..49]
+    @contact_name = contact_name.gsub!("@","")[0..49]
   end
   
   # Set the _generator_ of the TweepML document.
