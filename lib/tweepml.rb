@@ -34,7 +34,7 @@ class TweepML
   # Set the _contact_name_ of the TweepML document.
   # Max length is 50 characters
   def contact_name=(contact_name)
-    @contact_name = contact_name.gsub!("@","")[0..49]
+    @contact_name = contact_name.gsub("@","")[0..49]
   end
   
   # Set the _generator_ of the TweepML document.
@@ -47,6 +47,35 @@ class TweepML
   # Max length is 100 characters
   def generator_link=(url)
     @generator_link = url[0..99]
+  end
+  
+  # XML representation of the TweepML
+  def to_xml
+    doc = Document.new
+    tml = doc.add_element 'tweepml', {'version' => '1.0'}
+    
+    # Add the header elements
+    head = tml.add_element 'head'
+    [:title, :description, :link, :date_created, :date_modified, :contact_name, :contact_screen_name,
+    :copyright, :error_code, :error_description, :tags].each do |prop|
+      unless self.send(prop).nil?
+        t = head.add_element prop.to_s
+        t.text = self.send(prop)
+      end
+    end
+    
+    head.add_element("generator").text = "TweepML Ruby Generator v0.1"
+    head.add_element("generator_link").text = "http://github.com/dacort/tweepml"
+    
+    # Add the tweep_list element
+    tweep_list = tml.add_element 'tweep_list'
+    
+    # Iterate through all tweeps/tweep_lists - should probably use nodes
+    self.tweep_list.tweep_lists.each do|tl|
+      tweep_list.add_element(tl.to_xml)
+    end
+    
+    doc
   end
   
   private 
@@ -133,6 +162,17 @@ class TweepList
   def tweep_lists
     @nodes.select{|t| t.is_a?TweepList}
   end
+  
+  # XML representation of TweepList
+  def to_xml
+    tweep_list = Element.new 'tweep_list'
+    tweep_list.add_attribute('title', @title) unless @title.nil?
+    tweep_list.add_attribute('tags', @tags) unless @tags.nil?
+    
+    @nodes.each{|n| tweep_list.add_element(n.to_xml)}
+    
+    tweep_list
+  end
 end
 
 class Tweep
@@ -160,6 +200,18 @@ class Tweep
   # String representation of a Tweep
   def to_s
     @screen_name
+  end
+  
+  # XML representation of a Tweep
+  def to_xml
+    tweep = Element.new 'tweep'
+    [:id, :screen_name, :title, :tags].each do |prop|
+      unless self.send(prop).nil?
+        tweep.add_attribute(prop.to_s, "#{self.send(prop)}")
+      end
+    end
+    
+    tweep
   end
   
   # Find a tweep by screen_name
