@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{tweepml}
-  s.version = "0.1"
+  s.version = "0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Damon P. Cortesi"]
-  s.date = %q{2009-08-29}
+  s.date = %q{2009-09-29}
   s.description = %q{TweepML is an XML format used to represent a list of Tweeps (Twitter users).}
   s.email = %q{d.lifehacker@gmail.com}
   s.extra_rdoc_files = ["README"]
