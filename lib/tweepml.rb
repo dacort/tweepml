@@ -64,16 +64,10 @@ class TweepML
       end
     end
     
-    head.add_element("generator").text = "TweepML Ruby Generator v0.1"
+    head.add_element("generator").text = "TweepML Ruby Generator v0.2"
     head.add_element("generator_link").text = "http://github.com/dacort/tweepml"
     
-    # Add the tweep_list element
-    tweep_list = tml.add_element 'tweep_list'
-    
-    # Iterate through all tweeps/tweep_lists - should probably use nodes
-    self.tweep_list.tweep_lists.each do|tl|
-      tweep_list.add_element(tl.to_xml)
-    end
+    tml.add_element self.tweep_list.to_xml
     
     doc
   end
