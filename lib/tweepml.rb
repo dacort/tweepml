@@ -64,7 +64,7 @@ class TweepML
       end
     end
     
-    head.add_element("generator").text = "TweepML Ruby Generator v0.2"
+    head.add_element("generator").text = "TweepML Ruby Generator v0.3"
     head.add_element("generator_link").text = "http://github.com/dacort/tweepml"
     
     tml.add_element self.tweep_list.to_xml
